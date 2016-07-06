@@ -3426,7 +3426,7 @@ compose_dec_mpls_ttl_action(struct xlate_ctx *ctx)
 }
 
 
-static void add_flow(struct xlate_ctx *ctx,  struct flow match, struct ofpact ofpacts){
+static void add_flow(struct xlate_ctx *ctx,  struct flow match, struct ofpact *ofpacts){
 	char* docker = "tcp:127.0.0.1:6633";
 	struct connmgr *mgr = ctx->xin->ofproto->up.connmgr;
 	struct ofputil_flow_mod fm;
@@ -3541,12 +3541,12 @@ static void add_flow(struct xlate_ctx *ctx,  struct flow match, struct ofpact of
 	fm.cookie_mask = 0;
 	fm.new_cookie = 0x70900000000A000;
 	fm.ofpacts_len = 8;
-	fm.ofpacts = ofpacts;
+	fm.ofpacts = &ofpacts;
 
 	ofproto_flow_mod(&ctx->xin->ofproto->up, &fm);
 }
 
-static void del_flow(struct xlate_ctx *ctx, struct flow match,  struct ofpact ofpacts){
+static void del_flow(struct xlate_ctx *ctx, struct flow match,  struct ofpact *ofpacts){
 	char* docker = "tcp:127.0.0.1:6633";
 	struct connmgr *mgr = ctx->xin->ofproto->up.connmgr;
 	struct ofputil_flow_mod fm;
@@ -3660,7 +3660,7 @@ static void del_flow(struct xlate_ctx *ctx, struct flow match,  struct ofpact of
 	fm.cookie_mask = 0;
 	fm.new_cookie = 0x70900000000A000;
 	fm.ofpacts_len = 8;
-	fm.ofpacts = ofpacts;
+	fm.ofpacts = &ofpacts;
 
 	oh = malloc(50);
 	bzero(oh,50);
@@ -3735,7 +3735,7 @@ xlate_output_action(struct xlate_ctx *ctx,
     	bzero(&flow2,sizeof(flow2));
     	bzero(&flow1_actions, sizeof(flow1_actions));
     	bzero(&flow2_actions, sizeof(flow2_actions));
-    	flow1.in_port = 1;
+    	flow1.in_port.ofp_port = 1;
     	flow1.nw_src = 0xC0A80301;
     	flow1.nw_dst = 0xC0A80302;
     	flow1_actions.ofpact.len = sizeof(flow1_actions);
@@ -3743,15 +3743,15 @@ xlate_output_action(struct xlate_ctx *ctx,
     	flow1_actions.port = 2;
     	flow1_actions.max_len = 0xFFFF;
 
-    	flow2.in_port = 2;
+    	flow2.in_port.ofp_port = 2;
 		flow2.nw_src = 0xC0A80301;
 		flow2.nw_dst = 0xC0A80302;
 		flow2_actions.ofpact.len = sizeof(flow2_actions);
 		flow2_actions.ofpact.type = OFPACT_OUTPUT;
 		flow2_actions.port = 1;
 		flow2_actions.max_len = 0xFFFF;
-		add_flow(ctx,flow1,flow1_actions);
-		add_flow(ctx,flow2,flow2_actions);
+		add_flow(ctx,flow1,(struct ofpact *)(&flow1_actions));
+		add_flow(ctx,flow2,(struct ofpact *)(&flow2_actions));
 
 		if(ctx->xin->flow.in_port.ofp_port==1) compose_output_action(ctx, 2);
 		if(ctx->xin->flow.in_port.ofp_port==2) compose_output_action(ctx, 1);
