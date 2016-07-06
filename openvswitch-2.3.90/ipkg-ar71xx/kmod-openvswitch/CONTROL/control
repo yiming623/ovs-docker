@@ -1,0 +1,11 @@
+Package: kmod-openvswitch
+Version: 3.18.29+2.3.90-58be9c9fd732b5bdd3d4c2e9b8cc2313f570094d
+Depends: kernel (=3.18.29-1-b91556c0fe67ff8c229fa057411e31e5), kmod-stp, kmod-ipv6, kmod-gre, kmod-lib-crc32c, kmod-vxlan
+Source: feeds/packages/net/openvswitch
+License: Apache-2.0
+LicenseFiles: COPYING
+Section: kernel
+Architecture: ar71xx
+Installed-Size: 47381
+Description:  This package contains the Open vSwitch kernel moodule and bridge compat
+ module. Furthermore, it supports OpenFlow.
