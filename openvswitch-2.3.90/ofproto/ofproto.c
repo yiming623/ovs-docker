@@ -338,7 +338,7 @@ ofproto_init(const struct shash *iface_hints)
     struct shash_node *node;
     size_t i;
     char str[10000];
-    char* file = "/home/flowvisor/test.txt";
+    char* file = "/var/run/openvswitch/log.txt";
 	g_fp = open(file, O_CREAT | O_WRONLY, S_IRUSR | S_IWUSR);
     ofproto_class_register(&ofproto_dpif_class);
     sprintf(str+strlen(str),"--=== ofproto_init ===--\n");
