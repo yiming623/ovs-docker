@@ -273,7 +273,9 @@ void ovs_dp_process_packet(struct sk_buff *skb, struct sw_flow_key *key)
 	/* Look up flow. */
 	flow = ovs_flow_tbl_lookup_stats(&dp->table, key, skb_get_hash(skb),
 					 &n_mask_hit);
+	printk("--=== lookup flow ===--\n");
 	if (unlikely(!flow)) {
+		printk("--=== no flow ===--\n");
 		struct dp_upcall_info upcall;
 		int error;
 

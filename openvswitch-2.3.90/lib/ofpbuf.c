@@ -106,7 +106,6 @@ ofpbuf_use_const(struct ofpbuf *b, const void *data, size_t size)
     ofpbuf_use__(b, CONST_CAST(void *, data), size, OFPBUF_STACK);
     b->size = size;
 }
-
 /* Initializes 'b' as an empty ofpbuf with an initial capacity of 'size'
  * bytes. */
 void

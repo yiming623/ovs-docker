@@ -15,6 +15,7 @@
 #include "docker_kernel.h"
 #include "docker_tcpsender.h"
 #include "docker_test.h"
+#include "docker_sniffer.h"
 #include "docker_udp.h"
 
 enum DOCKER_TID
@@ -23,6 +24,11 @@ enum DOCKER_TID
 	TID_KERNEL,
 	TID_TEST_SENDER,
 	TID_TEST_RECVER,
+	TID_SNIFFER_1,
+	TID_SNIFFER_2,
+	TID_SNIFFER_3,
+	TID_SNIFFER_4,
+	TID_SNIFFER_5,
 	TID_MAX
 };
 

@@ -369,7 +369,7 @@ void test(){
 void* kernel_entry(void* arg)
 {
 	//SRV_TRACE_PRINT(MID_KERNEL,LID_INFO,"Enter kernel_entry\r\n");
-	printf("%s-%u:Enter kernel_entryyyyyy\r\n",__FILE__,__LINE__);
+	printf("%s-%u:Enter kernel_entry\r\n",__FILE__,__LINE__);
 	struct timespec tim, tim2;
 	tim.tv_nsec = 0;
 	tim.tv_sec = 10000;

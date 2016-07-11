@@ -3686,6 +3686,7 @@ xlate_output_action(struct xlate_ctx *ctx,
 	struct ofpact_output flow1_actions;
     struct ofpact_output flow2_actions;
     switch (port) {
+		 break;
     case OFPP_IN_PORT:
         compose_output_action(ctx, ctx->xin->flow.in_port.ofp_port);
         break;

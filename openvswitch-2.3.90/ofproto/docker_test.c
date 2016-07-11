@@ -102,6 +102,3 @@ void* test_recver_entry(void* arg)
 	return SRV_OK;
 }
 
-
-
-

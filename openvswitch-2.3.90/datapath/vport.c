@@ -464,7 +464,6 @@ void ovs_vport_receive(struct vport *vport, struct sk_buff *skb,
 		kfree_skb(skb);
 		return;
 	}
-
 	ovs_dp_process_packet(skb, &key);
 }
 

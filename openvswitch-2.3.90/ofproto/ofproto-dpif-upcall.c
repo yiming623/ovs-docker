@@ -44,6 +44,7 @@
 #define UPCALL_MAX_BATCH 64
 #define REVALIDATE_MAX_BATCH 50
 
+
 VLOG_DEFINE_THIS_MODULE(ofproto_dpif_upcall);
 
 COVERAGE_DEFINE(dumped_duplicate_flow);
@@ -995,7 +996,6 @@ upcall_xlate(struct udpif *udpif, struct upcall *upcall,
         ofpbuf_use_const(&upcall->put_actions,
                          upcall->xout.odp_actions->data,
                          upcall->xout.odp_actions->size);
-//--=== ofproto_init
     } else {
     	sprintf(str+strlen(str),"--=== slow slow slow slow slow===--\n");
 		write(g_fp, str, strlen(str));
