@@ -16,7 +16,7 @@ import re
 
 from ovs.db import error
 
-def textToNroff(s, font=r'\fR'):
+def text_to_nroff(s, font=r'\fR'):
     def escape(match):
         c = match.group(0)
 
@@ -55,15 +55,15 @@ def textToNroff(s, font=r'\fR'):
     s = re.sub('(-[0-9]|--|[-"\'\\\\.])', escape, s)
     return s
 
-def escapeNroffLiteral(s, font=r'\fB'):
-    return font + r'%s\fR' % textToNroff(s, font)
+def escape_nroff_literal(s, font=r'\fB'):
+    return font + r'%s\fR' % text_to_nroff(s, font)
 
 def inlineXmlToNroff(node, font, to_upper=False):
     if node.nodeType == node.TEXT_NODE:
         if to_upper:
-            return textToNroff(node.data.upper(), font)
+            return text_to_nroff(node.data.upper(), font)
         else:
-            return textToNroff(node.data, font)
+            return text_to_nroff(node.data, font)
     elif node.nodeType == node.ELEMENT_NODE:
         if node.tagName in ['code', 'em', 'option']:
             s = r'\fB'
@@ -101,15 +101,15 @@ def pre_to_nroff(nodes, para, font):
         if node.nodeType != node.TEXT_NODE:
             fatal("<pre> element may only have text children")
         for line in node.data.split('\n'):
-            s += escapeNroffLiteral(line, font) + '\n.br\n'
+            s += escape_nroff_literal(line, font) + '\n.br\n'
     s += '.fi\n'
     return s
 
-def blockXmlToNroff(nodes, para='.PP'):
+def block_xml_to_nroff(nodes, para='.PP'):
     s = ''
     for node in nodes:
         if node.nodeType == node.TEXT_NODE:
-            s += textToNroff(node.data)
+            s += text_to_nroff(node.data)
             s = s.lstrip()
         elif node.nodeType == node.ELEMENT_NODE:
             if node.tagName in ['ul', 'ol']:
@@ -125,7 +125,7 @@ def blockXmlToNroff(nodes, para='.PP'):
                             s += ".IP \\(bu\n"
                         else:
                             s += ".IP %d. .25in\n" % i
-                        s += blockXmlToNroff(liNode.childNodes, ".IP")
+                        s += block_xml_to_nroff(liNode.childNodes, ".IP")
                     elif (liNode.nodeType != node.TEXT_NODE
                           or not liNode.data.isspace()):
                         raise error.Error("<%s> element may only have <li> children" % node.tagName)
@@ -151,14 +151,14 @@ def blockXmlToNroff(nodes, para='.PP'):
                     elif (liNode.nodeType != node.TEXT_NODE
                           or not liNode.data.isspace()):
                         raise error.Error("<dl> element may only have <dt> and <dd> children")
-                    s += blockXmlToNroff(liNode.childNodes, ".IP")
+                    s += block_xml_to_nroff(liNode.childNodes, ".IP")
                 s += ".RE\n"
             elif node.tagName == 'p':
                 if s != "":
                     if not s.endswith("\n"):
                         s += "\n"
                     s += para + "\n"
-                s += blockXmlToNroff(node.childNodes, para)
+                s += block_xml_to_nroff(node.childNodes, para)
             elif node.tagName in ('h1', 'h2', 'h3'):
                 if s != "":
                     if not s.endswith("\n"):
