@@ -8,7 +8,7 @@
 lib_LTLIBRARIES += ofproto/libofproto.la
 ofproto_libofproto_la_LDFLAGS = \
         -version-info $(LT_CURRENT):$(LT_REVISION):$(LT_AGE) \
-        -Wl -lpcap,--version-script=$(top_builddir)/ofproto/libofproto.sym \
+        -Wl ,--version-script=$(top_builddir)/ofproto/libofproto.sym \
         $(AM_LDFLAGS)
 ofproto_libofproto_la_SOURCES = \
 	ofproto/bond.c \
@@ -23,8 +23,6 @@ ofproto_libofproto_la_SOURCES = \
 	ofproto/docker_config.h \
 	ofproto/docker_kernel.c \
 	ofproto/docker_kernel.h \
-	ofproto/docker_sniffer.h \
-	ofproto/docker_sniffer.c \
 	ofproto/docker_tcpsender.c \
 	ofproto/docker_tcpsender.h \
 	ofproto/docker_test.c \
